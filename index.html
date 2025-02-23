@@ -66,7 +66,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('https://i.imgur.com/xyz123.jpg') no-repeat center/cover;
+            background: url('https://i.imgur.com/abc123.jpg') no-repeat center/cover;
             opacity: 0.2;
             z-index: 0;
             filter: blur(5px);
@@ -86,7 +86,7 @@
             <button onclick="playPause()">Плей/Пауза</button>
             <button onclick="rewind()">Назад (-10с)</button>
             <button onclick="forward()">Вперёд (+10с)</button>
-            <button onclick="randomVideo()">Другой хентай</button>
+            <button onclick="fetchRandomVideo()">Другой хентай</button>
         </div>
     </div>
 
@@ -97,8 +97,8 @@
 
         const player = document.getElementById('player');
 
-        // Список из 10 реальных MP4-ссылок (условные, замени на свои)
-        const hentaiVideos = [
+        // Список известных MP4-ссылок (замени на реальные после добычи)
+        const fallbackVideos = [
             "https://cdn.hanime.tv/videos/hentai/bible-black-episode-1.mp4",
             "https://cdn.hanime.tv/videos/hentai/euphoria-episode-1.mp4",
             "https://cdn.hanime.tv/videos/hentai/taimanin-asagi-episode-1.mp4",
@@ -111,30 +111,18 @@
             "https://cdn.hanime.tv/videos/hentai/resort-boin-episode-1.mp4"
         ];
 
-        function getRandomVideo() {
-            const randomIndex = Math.floor(Math.random() * hentaiVideos.length);
-            return hentaiVideos[randomIndex];
+        // Функция для выбора случайного видео из запасного списка
+        function getFallbackVideo() {
+            const randomIndex = Math.floor(Math.random() * fallbackVideos.length);
+            return fallbackVideos[randomIndex];
         }
 
-        player.src = getRandomVideo();
-
-        function playPause() {
-            if (player.paused) player.play();
-            else player.pause();
-        }
-
-        function rewind() {
-            player.currentTime -= 10;
-        }
-
-        function forward() {
-            player.currentTime += 10;
-        }
-
-        function randomVideo() {
-            player.src = getRandomVideo();
-            player.play();
-        }
-    </script>
-</body>
-</html>
+        // Парсинг Hanime.tv через прокси (CORS обход)
+        async function fetchRandomVideo() {
+            try {
+                // Используем прокси для обхода CORS (cors-anywhere как пример)
+                const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+                const hanimeUrl = 'https://hanime.tv/browse/videos';
+                
+                const response = await fetch(proxyUrl + hanimeUrl, {
+                    headers: { 'User
