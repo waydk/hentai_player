@@ -125,4 +125,60 @@
                 const hanimeUrl = 'https://hanime.tv/browse/videos';
                 
                 const response = await fetch(proxyUrl + hanimeUrl, {
-                    headers: { 'User
+                    headers: { 'User-Agent': 'Mozilla/5.0' }
+                });
+                const htmlText = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(htmlText, 'text/html');
+
+                // Парсим ссылки на видео
+                const videoLinks = [];
+                doc.querySelectorAll('a[href*="/videos/hentai/"]').forEach(link => {
+                    const href = link.getAttribute('href');
+                    if (href && !videoLinks.includes(href)) {
+                        videoLinks.push(`https://hanime.tv${href}`);
+                    }
+                });
+
+                if (videoLinks.length === 0) throw new Error('Нет видео');
+
+                // Выбираем случайное видео
+                const randomLink = videoLinks[Math.floor(Math.random() * videoLinks.length)];
+                
+                // Запрашиваем страницу видео
+                const videoResponse = await fetch(proxyUrl + randomLink);
+                const videoHtml = await videoResponse.text();
+                const videoDoc = parser.parseFromString(videoHtml, 'text/html');
+
+                // Ищем MP4-ссылку (обычно в script или data-атрибутах)
+                const videoUrlMatch = videoHtml.match(/"contentUrl":\s*"([^"]+\.mp4)"/) || videoHtml.match(/"url":\s*"([^"]+\.mp4)"/);
+                const videoUrl = videoUrlMatch ? videoUrlMatch[1] : getFallbackVideo();
+
+                player.src = videoUrl;
+                player.play();
+            } catch (error) {
+                console.error('Ошибка парсинга:', error);
+                player.src = getFallbackVideo(); // Запасной вариант
+                player.play();
+            }
+        }
+
+        // Первоначальная загрузка видео
+        fetchRandomVideo();
+
+        // Управление плеером
+        function playPause() {
+            if (player.paused) player.play();
+            else player.pause();
+        }
+
+        function rewind() {
+            player.currentTime -= 10;
+        }
+
+        function forward() {
+            player.currentTime += 10;
+        }
+    </script>
+</body>
+</html>
