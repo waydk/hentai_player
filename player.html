@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Хентай-плеер для сенпая</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            background: #1a0033;
+            color: #ffccff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 5px #ff66ff;
+        }
+        video {
+            width: 100%;
+            max-width: 600px;
+            border: 2px solid #ff66ff;
+            border-radius: 10px;
+            background: #000;
+        }
+        .controls {
+            margin-top: 10px;
+        }
+        button {
+            background: #ff66ff;
+            border: none;
+            padding: 10px 20px;
+            color: #fff;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #ff99ff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Хентай-плеер, сенпай! 😽</h1>
+    <video id="player" controls>
+        <source src="https://example.com/sample_hentai_video.mp4" type="video/mp4">
+        Твой Telegram не поддерживает видео, сенпай!
+    </video>
+    <div class="controls">
+        <button onclick="playPause()">Плей/Пауза</button>
+        <button onclick="rewind()">Перемотать назад</button>
+        <button onclick="forward()">Перемотать вперёд</button>
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.ready();
+        tg.expand(); // Разворачиваем на весь экран
+
+        const player = document.getElementById('player');
+
+        // Получаем URL видео из параметров (если передан)
+        const urlParams = new URLSearchParams(window.location.search);
+        const videoUrl = urlParams.get('video') || 'https://example.com/sample_hentai_video.mp4';
+        player.src = videoUrl;
+
+        // Управление плеером
+        function playPause() {
+            if (player.paused) {
+                player.play();
+            } else {
+                player.pause();
+            }
+        }
+
+        function rewind() {
+            player.currentTime -= 10; // На 10 секунд назад
+        }
+
+        function forward() {
+            player.currentTime += 10; // На 10 секунд вперёд
+        }
+    </script>
+</body>
+</html>
