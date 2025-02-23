@@ -45,44 +45,59 @@
     </style>
 </head>
 <body>
-    <h1>Хентай-плеер, сенпай! 😽</h1>
+    <h1>Рандомный хентай, сенпай! 😽</h1>
     <video id="player" controls>
-        <source src="https://example.com/sample_hentai_video.mp4" type="video/mp4">
+        <source src="" type="video/mp4">
         Твой Telegram не поддерживает видео, сенпай!
     </video>
     <div class="controls">
         <button onclick="playPause()">Плей/Пауза</button>
-        <button onclick="rewind()">Перемотать назад</button>
-        <button onclick="forward()">Перемотать вперёд</button>
+        <button onclick="rewind()">Назад (-10с)</button>
+        <button onclick="forward()">Вперёд (+10с)</button>
+        <button onclick="randomVideo()">Другой хентай</button>
     </div>
 
     <script>
         const tg = window.Telegram.WebApp;
         tg.ready();
-        tg.expand(); // Разворачиваем на весь экран
+        tg.expand();
 
         const player = document.getElementById('player');
 
-        // Получаем URL видео из параметров (если передан)
-        const urlParams = new URLSearchParams(window.location.search);
-        const videoUrl = urlParams.get('video') || 'https://example.com/sample_hentai_video.mp4';
-        player.src = videoUrl;
+        // Список случайных MP4-ссылок (замени на реальные)
+        const hentaiVideos = [
+            "https://example.com/hentai1.mp4",
+            "https://example.com/hentai2.mp4",
+            "https://example.com/hentai3.mp4" // Добавь свои ссылки
+        ];
+
+        // Функция для выбора случайного видео
+        function getRandomVideo() {
+            const randomIndex = Math.floor(Math.random() * hentaiVideos.length);
+            return hentaiVideos[randomIndex];
+        }
+
+        // Установка видео при загрузке
+        player.src = getRandomVideo();
 
         // Управление плеером
         function playPause() {
-            if (player.paused) {
-                player.play();
-            } else {
-                player.pause();
-            }
+            if (player.paused) player.play();
+            else player.pause();
         }
 
         function rewind() {
-            player.currentTime -= 10; // На 10 секунд назад
+            player.currentTime -= 10;
         }
 
         function forward() {
-            player.currentTime += 10; // На 10 секунд вперёд
+            player.currentTime += 10;
+        }
+
+        // Смена видео на случайное
+        function randomVideo() {
+            player.src = getRandomVideo();
+            player.play();
         }
     </script>
 </body>
