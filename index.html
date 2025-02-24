@@ -7,7 +7,7 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         body {
-            background: #000000 url('https://i.pinimg.com/originals/5e/5e/5e/5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e.jpg') no-repeat center center fixed;
+            background: #000000 url('https://wallpapercave.com/wp/wp1877411.jpg') no-repeat center center fixed;
             background-size: cover;
             color: #ffffff;
             font-family: 'Segoe UI', Arial, sans-serif;
@@ -15,6 +15,7 @@
             margin: 0;
             padding: 20px;
             position: relative;
+            overflow-x: hidden;
         }
         body::before {
             content: "";
@@ -23,66 +24,113 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.6); /* Затемнение фона */
+            background: rgba(0, 0, 0, 0.7);
             z-index: -1;
         }
         h1 {
-            font-size: 28px;
-            margin-bottom: 30px;
-            color: #f0e6ff; /* Мягкий белый с легким фиолетовым оттенком */
-            text-shadow: 0 0 5px rgba(240, 230, 255, 0.8);
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: #f0e6ff;
+            text-shadow: 0 0 6px rgba(240, 230, 255, 0.8);
+            animation: glow 2s infinite alternate;
+        }
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(30, 25, 50, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
         }
         video {
             width: 100%;
             max-width: 640px;
-            border: 3px solid #4b3a6e; /* Темно-фиолетовая рамка */
-            border-radius: 10px;
-            background: #1a1a1a; /* Почти черный фон видео */
+            border: 4px solid #5e4a8c;
+            border-radius: 12px;
+            background: #1a1a1a;
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+            margin-bottom: 15px;
         }
         .controls {
-            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
         }
         button {
-            background: #4b3a6e; /* Темно-фиолетовый для кнопок */
+            background: #5e4a8c;
             border: none;
             padding: 12px 25px;
             color: #ffffff;
             font-size: 16px;
             border-radius: 8px;
             cursor: pointer;
-            margin: 5px;
             transition: all 0.3s ease;
         }
         button:hover {
-            background: #6e5a9e; /* Светлее при наведении */
+            background: #7b65b3;
             transform: scale(1.05);
-            box-shadow: 0 0 10px rgba(110, 90, 158, 0.7);
+            box-shadow: 0 0 12px rgba(123, 101, 179, 0.7);
+        }
+        .anime-girls {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .anime-girl {
+            position: absolute;
+            opacity: 0.3;
+            animation: float 10s infinite ease-in-out;
+        }
+        .anime-girl:nth-child(1) { top: 10%; left: 5%; width: 150px; }
+        .anime-girl:nth-child(2) { top: 60%; right: 5%; width: 180px; animation-delay: 2s; }
+        @keyframes glow {
+            from { text-shadow: 0 0 6px rgba(240, 230, 255, 0.8); }
+            to { text-shadow: 0 0 12px rgba(240, 230, 255, 1); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
         }
     </style>
 </head>
 <body>
-    <h1>Хентай-плеер для сенпая! 😽</h1>
-    <video id="player" controls>
-        <source src="https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4" type="video/mp4">
-        Твой Telegram не поддерживает видео, сенпай!
-    </video>
-    <div class="controls">
-        <button onclick="playPause()">Плей/Пауза</button>
-        <button onclick="rewind()">Назад (-10с)</button>
-        <button onclick="forward()">Вперед (+10с)</button>
+    <div class="anime-girls">
+        <img src="https://i.pinimg.com/originals/8c/8f/8c8f8c8f8c8f8c8f8c8f8c8f8c8f8c8f.jpg" class="anime-girl">
+        <img src="https://wallpapercave.com/wp/wp1877420.jpg" class="anime-girl">
+    </div>
+    <div class="container">
+        <h1>Хентай-плеер для сенпая! 😽</h1>
+        <video id="player" controls>
+            <source src="https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4" type="video/mp4">
+            Твой Telegram не поддерживает видео, сенпай!
+        </video>
+        <div class="controls">
+            <button onclick="playPause()">Плей/Пауза</button>
+            <button onclick="rewind()">Назад (-10с)</button>
+            <button onclick="forward()">Вперед (+10с)</button>
+            <button onclick="toggleVolume()">Громкость</button>
+            <button onclick="toggleFullscreen()">Полный экран</button>
+            <button onclick="nextVideo()">Другое видео</button>
+        </div>
     </div>
 
     <script>
         const tg = window.Telegram.WebApp;
         tg.ready();
-        tg.expand(); // Разворачиваем на весь экран
+        tg.expand();
 
         const player = document.getElementById('player');
+        let isMuted = false;
 
-        // Получаем URL видео из параметров (если передан), иначе используем встроенное
+        // Получаем начальный URL видео из параметров
         const urlParams = new URLSearchParams(window.location.search);
-        const videoUrl = urlParams.get('video') || 'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4';
+        let videoUrl = urlParams.get('video') || 'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4';
         player.src = videoUrl;
 
         // Управление плеером
@@ -95,12 +143,51 @@
         }
 
         function rewind() {
-            player.currentTime -= 10; // На 10 секунд назад
+            player.currentTime -= 10;
         }
 
         function forward() {
-            player.currentTime += 10; // На 10 секунд вперёд
+            player.currentTime += 10;
         }
+
+        function toggleVolume() {
+            isMuted = !isMuted;
+            player.muted = isMuted;
+            player.volume = isMuted ? 0 : 1;
+        }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                player.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        function nextVideo() {
+            // Отправляем запрос боту для получения нового видео
+            tg.sendData("get_random_video");
+            tg.onEvent('mainButtonClicked', function() {
+                // Ожидаем ответа от бота
+                tg.onEvent('webAppData', function(data) {
+                    const newVideoUrl = data.data;
+                    if (newVideoUrl) {
+                        player.src = newVideoUrl;
+                        player.play();
+                    }
+                });
+            });
+            tg.MainButton.setText("Обновить видео").show();
+        }
+
+        // Обработка ответа от бота (если он пришлет новый URL)
+        tg.onEvent('webAppData', function(data) {
+            const newVideoUrl = data.data;
+            if (newVideoUrl) {
+                player.src = newVideoUrl;
+                player.play();
+            }
+        });
     </script>
 </body>
 </html>
