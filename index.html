@@ -7,50 +7,64 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         body {
-            background: #2c1b47; /* Мягкий темно-фиолетовый фон */
-            color: #e0d0ff; /* Светлый сиреневый текст */
+            background: #000000 url('https://i.pinimg.com/originals/5e/5e/5e/5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #ffffff;
             font-family: 'Segoe UI', Arial, sans-serif;
             text-align: center;
             margin: 0;
             padding: 20px;
+            position: relative;
+        }
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6); /* Затемнение фона */
+            z-index: -1;
         }
         h1 {
-            font-size: 26px;
-            margin-bottom: 25px;
-            color: #d4aaff; /* Нежный сиреневый заголовок */
-            text-shadow: 0 0 3px rgba(212, 170, 255, 0.5);
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: #f0e6ff; /* Мягкий белый с легким фиолетовым оттенком */
+            text-shadow: 0 0 5px rgba(240, 230, 255, 0.8);
         }
         video {
             width: 100%;
             max-width: 640px;
-            border: 3px solid #5e4a8c; /* Спокойный фиолетовый бордер */
-            border-radius: 8px;
-            background: #1a1326; /* Темный фон для видео */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            border: 3px solid #4b3a6e; /* Темно-фиолетовая рамка */
+            border-radius: 10px;
+            background: #1a1a1a; /* Почти черный фон видео */
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
         }
         .controls {
-            margin-top: 15px;
+            margin-top: 20px;
         }
         button {
-            background: #6b5799; /* Мягкий фиолетовый для кнопок */
+            background: #4b3a6e; /* Темно-фиолетовый для кнопок */
             border: none;
-            padding: 10px 20px;
-            color: #fff;
+            padding: 12px 25px;
+            color: #ffffff;
             font-size: 16px;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             margin: 5px;
-            transition: background 0.3s;
+            transition: all 0.3s ease;
         }
         button:hover {
-            background: #8973c2; /* Светлее при наведении */
+            background: #6e5a9e; /* Светлее при наведении */
+            transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(110, 90, 158, 0.7);
         }
     </style>
 </head>
 <body>
     <h1>Хентай-плеер для сенпая! 😽</h1>
     <video id="player" controls>
-        <source src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4" type="video/mp4">
+        <source src="https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4" type="video/mp4">
         Твой Telegram не поддерживает видео, сенпай!
     </video>
     <div class="controls">
@@ -68,7 +82,7 @@
 
         // Получаем URL видео из параметров (если передан), иначе используем встроенное
         const urlParams = new URLSearchParams(window.location.search);
-        const videoUrl = urlParams.get('video') || 'http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4';
+        const videoUrl = urlParams.get('video') || 'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4';
         player.src = videoUrl;
 
         // Управление плеером
