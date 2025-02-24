@@ -7,25 +7,13 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         body {
-            background: #000000 url('https://wallpapercave.com/wp/wp1877411.jpg') no-repeat center center fixed;
-            background-size: cover;
+            background: #000000;
             color: #ffffff;
             font-family: 'Segoe UI', Arial, sans-serif;
             text-align: center;
             margin: 0;
             padding: 20px;
-            position: relative;
             overflow-x: hidden;
-        }
-        body::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: -1;
         }
         h1 {
             font-size: 32px;
@@ -41,82 +29,93 @@
             background: rgba(30, 25, 50, 0.9);
             border-radius: 15px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+            position: relative;
+        }
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 640px;
+            margin: 0 auto;
         }
         video {
             width: 100%;
-            max-width: 640px;
             border: 4px solid #5e4a8c;
             border-radius: 12px;
             background: #1a1a1a;
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
-            margin-bottom: 15px;
         }
-        .controls {
+        .custom-controls {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
             gap: 10px;
-            margin-top: 15px;
+            background: rgba(30, 25, 50, 0.8);
+            padding: 5px 10px;
+            border-radius: 8px;
         }
-        button {
+        .custom-controls button {
             background: #5e4a8c;
             border: none;
-            padding: 12px 25px;
+            padding: 8px 15px;
             color: #ffffff;
-            font-size: 16px;
-            border-radius: 8px;
+            font-size: 14px;
+            border-radius: 6px;
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        button:hover {
+        .custom-controls button:hover {
             background: #7b65b3;
             transform: scale(1.05);
-            box-shadow: 0 0 12px rgba(123, 101, 179, 0.7);
+            box-shadow: 0 0 10px rgba(123, 101, 179, 0.7);
         }
-        .anime-girls {
+        .anime-frame {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
             pointer-events: none;
-            z-index: 0;
+            z-index: 1;
         }
         .anime-girl {
             position: absolute;
-            opacity: 0.3;
-            animation: float 10s infinite ease-in-out;
+            opacity: 0.5;
+            animation: float 8s infinite ease-in-out;
         }
-        .anime-girl:nth-child(1) { top: 10%; left: 5%; width: 150px; }
-        .anime-girl:nth-child(2) { top: 60%; right: 5%; width: 180px; animation-delay: 2s; }
+        .anime-girl.top-left { top: -50px; left: -50px; width: 100px; }
+        .anime-girl.top-right { top: -50px; right: -50px; width: 100px; animation-delay: 2s; }
+        .anime-girl.bottom-left { bottom: -50px; left: -50px; width: 100px; animation-delay: 1s; }
+        .anime-girl.bottom-right { bottom: -50px; right: -50px; width: 100px; animation-delay: 3s; }
         @keyframes glow {
             from { text-shadow: 0 0 6px rgba(240, 230, 255, 0.8); }
             to { text-shadow: 0 0 12px rgba(240, 230, 255, 1); }
         }
         @keyframes float {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+            50% { transform: translateY(-15px); }
         }
     </style>
 </head>
 <body>
-    <div class="anime-girls">
-        <img src="https://i.pinimg.com/originals/8c/8f/8c8f8c8f8c8f8c8f8c8f8c8f8c8f8c8f.jpg" class="anime-girl">
-        <img src="https://wallpapercave.com/wp/wp1877420.jpg" class="anime-girl">
-    </div>
     <div class="container">
         <h1>Хентай-плеер для сенпая! 😽</h1>
-        <video id="player" controls>
-            <source src="https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4" type="video/mp4">
-            Твой Telegram не поддерживает видео, сенпай!
-        </video>
-        <div class="controls">
-            <button onclick="playPause()">Плей/Пауза</button>
-            <button onclick="rewind()">Назад (-10с)</button>
-            <button onclick="forward()">Вперед (+10с)</button>
-            <button onclick="toggleVolume()">Громкость</button>
-            <button onclick="toggleFullscreen()">Полный экран</button>
-            <button onclick="nextVideo()">Другое видео</button>
+        <div class="video-wrapper">
+            <video id="player" controls>
+                <source src="https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4" type="video/mp4">
+                Твой Telegram не поддерживает видео, сенпай!
+            </video>
+            <div class="custom-controls">
+                <button onclick="playPause()">▶️ Плей/Пауза</button>
+                <button onclick="nextVideo()">🔄 Другое видео</button>
+            </div>
+            <div class="anime-frame">
+                <img src="https://wallpapercave.com/wp/wp1877420.jpg" class="anime-girl top-left">
+                <img src="https://wallpapercave.com/wp/wp1877422.jpg" class="anime-girl top-right">
+                <img src="https://wallpapercave.com/wp/wp1877424.jpg" class="anime-girl bottom-left">
+                <img src="https://wallpapercave.com/wp/wp1877426.jpg" class="anime-girl bottom-right">
+            </div>
         </div>
     </div>
 
@@ -126,7 +125,6 @@
         tg.expand();
 
         const player = document.getElementById('player');
-        let isMuted = false;
 
         // Получаем начальный URL видео из параметров
         const urlParams = new URLSearchParams(window.location.search);
@@ -142,47 +140,21 @@
             }
         }
 
-        function rewind() {
-            player.currentTime -= 10;
-        }
-
-        function forward() {
-            player.currentTime += 10;
-        }
-
-        function toggleVolume() {
-            isMuted = !isMuted;
-            player.muted = isMuted;
-            player.volume = isMuted ? 0 : 1;
-        }
-
-        function toggleFullscreen() {
-            if (!document.fullscreenElement) {
-                player.requestFullscreen();
-            } else {
-                document.exitFullscreen();
-            }
-        }
-
         function nextVideo() {
             // Отправляем запрос боту для получения нового видео
             tg.sendData("get_random_video");
-            tg.onEvent('mainButtonClicked', function() {
-                // Ожидаем ответа от бота
-                tg.onEvent('webAppData', function(data) {
-                    const newVideoUrl = data.data;
-                    if (newVideoUrl) {
-                        player.src = newVideoUrl;
-                        player.play();
-                    }
-                });
+            tg.onEvent('webAppData', function(event) {
+                const newVideoUrl = event.data;
+                if (newVideoUrl) {
+                    player.src = newVideoUrl;
+                    player.play();
+                }
             });
-            tg.MainButton.setText("Обновить видео").show();
         }
 
-        // Обработка ответа от бота (если он пришлет новый URL)
-        tg.onEvent('webAppData', function(data) {
-            const newVideoUrl = data.data;
+        // Обработка ответа от бота
+        tg.onEvent('webAppData', function(event) {
+            const newVideoUrl = event.data;
             if (newVideoUrl) {
                 player.src = newVideoUrl;
                 player.play();
