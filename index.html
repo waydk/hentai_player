@@ -7,117 +7,57 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         body {
-            background: #000000;
-            color: #ffffff;
-            font-family: 'Segoe UI', Arial, sans-serif;
-            text-align: center;
+            background: linear-gradient(135deg, #0a001f 0%, #1a0033 100%);
             margin: 0;
-            padding: 20px;
-            overflow-x: hidden;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
         }
         h1 {
-            font-size: 32px;
+            font-size: 36px;
+            font-weight: 600;
+            background: linear-gradient(45deg, #ff6bd6, #a47bff, #66d9ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(255, 107, 214, 0.5);
             margin-bottom: 20px;
-            color: #f0e6ff;
-            text-shadow: 0 0 6px rgba(240, 230, 255, 0.8);
-            animation: glow 2s infinite alternate;
-        }
-        .container {
-            max-width: 700px;
-            margin: 0 auto;
-            padding: 20px;
-            background: rgba(30, 25, 50, 0.9);
-            border-radius: 15px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
-            position: relative;
-        }
-        .video-wrapper {
-            position: relative;
-            width: 100%;
-            max-width: 640px;
-            margin: 0 auto;
+            animation: neonPulse 2s infinite alternate;
         }
         video {
-            width: 100%;
-            border: 4px solid #5e4a8c;
-            border-radius: 12px;
+            width: 90%;
+            max-width: 800px;
+            border-radius: 15px;
             background: #1a1a1a;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            border: 2px solid rgba(255, 255, 255, 0.1);
         }
-        .custom-controls {
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 10px;
+        video::-webkit-media-controls-panel {
             background: rgba(30, 25, 50, 0.8);
-            padding: 5px 10px;
-            border-radius: 8px;
+            border-radius: 10px;
         }
-        .custom-controls button {
-            background: #5e4a8c;
-            border: none;
-            padding: 8px 15px;
-            color: #ffffff;
-            font-size: 14px;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        video::-webkit-media-controls-play-button,
+        video::-webkit-media-controls-timeline,
+        video::-webkit-media-controls-current-time-display {
+            filter: drop-shadow(0 0 5px rgba(255, 107, 214, 0.5));
         }
-        .custom-controls button:hover {
-            background: #7b65b3;
-            transform: scale(1.05);
-            box-shadow: 0 0 10px rgba(123, 101, 179, 0.7);
-        }
-        .anime-frame {
-            position: absolute;
-            top: -20px;
-            left: -20px;
-            right: -20px;
-            bottom: -20px;
-            pointer-events: none;
-            z-index: 1;
-        }
-        .anime-girl {
-            position: absolute;
-            opacity: 0.5;
-            animation: float 8s infinite ease-in-out;
-        }
-        .anime-girl.top-left { top: -50px; left: -50px; width: 100px; }
-        .anime-girl.top-right { top: -50px; right: -50px; width: 100px; animation-delay: 2s; }
-        .anime-girl.bottom-left { bottom: -50px; left: -50px; width: 100px; animation-delay: 1s; }
-        .anime-girl.bottom-right { bottom: -50px; right: -50px; width: 100px; animation-delay: 3s; }
-        @keyframes glow {
-            from { text-shadow: 0 0 6px rgba(240, 230, 255, 0.8); }
-            to { text-shadow: 0 0 12px rgba(240, 230, 255, 1); }
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+        @keyframes neonPulse {
+            from { text-shadow: 0 0 10px rgba(255, 107, 214, 0.5), 0 0 20px rgba(164, 123, 255, 0.3); }
+            to { text-shadow: 0 0 15px rgba(255, 107, 214, 0.8), 0 0 30px rgba(164, 123, 255, 0.6); }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Хентай-плеер для сенпая! 😽</h1>
-        <div class="video-wrapper">
-            <video id="player" controls>
-                <source src="https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4" type="video/mp4">
-                Твой Telegram не поддерживает видео, сенпай!
-            </video>
-            <div class="custom-controls">
-                <button onclick="playPause()">▶️ Плей/Пауза</button>
-                <button onclick="nextVideo()">🔄 Другое видео</button>
-            </div>
-            <div class="anime-frame">
-                <img src="https://wallpapercave.com/wp/wp1877420.jpg" class="anime-girl top-left">
-                <img src="https://wallpapercave.com/wp/wp1877422.jpg" class="anime-girl top-right">
-                <img src="https://wallpapercave.com/wp/wp1877424.jpg" class="anime-girl bottom-left">
-                <img src="https://wallpapercave.com/wp/wp1877426.jpg" class="anime-girl bottom-right">
-            </div>
-        </div>
-    </div>
+    <h1>Хентай для сенпая! 😽</h1>
+    <video id="player" controls autoplay>
+        <source src="https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4" type="video/mp4">
+        Твой Telegram не поддерживает видео, сенпай!
+    </video>
 
     <script>
         const tg = window.Telegram.WebApp;
@@ -130,36 +70,6 @@
         const urlParams = new URLSearchParams(window.location.search);
         let videoUrl = urlParams.get('video') || 'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4';
         player.src = videoUrl;
-
-        // Управление плеером
-        function playPause() {
-            if (player.paused) {
-                player.play();
-            } else {
-                player.pause();
-            }
-        }
-
-        function nextVideo() {
-            // Отправляем запрос боту для получения нового видео
-            tg.sendData("get_random_video");
-            tg.onEvent('webAppData', function(event) {
-                const newVideoUrl = event.data;
-                if (newVideoUrl) {
-                    player.src = newVideoUrl;
-                    player.play();
-                }
-            });
-        }
-
-        // Обработка ответа от бота
-        tg.onEvent('webAppData', function(event) {
-            const newVideoUrl = event.data;
-            if (newVideoUrl) {
-                player.src = newVideoUrl;
-                player.play();
-            }
-        });
     </script>
 </body>
 </html>
