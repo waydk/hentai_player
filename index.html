@@ -7,57 +7,65 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         body {
-            background: linear-gradient(135deg, #0a001f 0%, #1a0033 100%);
+            background: #0a0a0a;
+            color: #e0e0e0;
+            font-family: 'Inter', sans-serif;
+            text-align: center;
             margin: 0;
-            padding: 0;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            font-family: 'Poppins', sans-serif;
             overflow: hidden;
         }
         h1 {
-            font-size: 36px;
-            font-weight: 600;
-            background: linear-gradient(45deg, #ff6bd6, #a47bff, #66d9ff);
+            font-size: 34px;
+            font-weight: 700;
+            color: #ffffff;
+            background: linear-gradient(45deg, #ff3b94, #7b4dff);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-shadow: 0 0 10px rgba(255, 107, 214, 0.5);
-            margin-bottom: 20px;
-            animation: neonPulse 2s infinite alternate;
+            text-shadow: 0 0 8px rgba(255, 59, 148, 0.4);
+            margin-bottom: 30px;
         }
         video {
             width: 90%;
             max-width: 800px;
-            border-radius: 15px;
-            background: #1a1a1a;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            background: #1c1c1c;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.8);
+            border: 1px solid #333;
         }
         video::-webkit-media-controls-panel {
-            background: rgba(30, 25, 50, 0.8);
-            border-radius: 10px;
+            background: rgba(20, 20, 20, 0.9);
+            border-radius: 8px;
         }
-        video::-webkit-media-controls-play-button,
-        video::-webkit-media-controls-timeline,
-        video::-webkit-media-controls-current-time-display {
-            filter: drop-shadow(0 0 5px rgba(255, 107, 214, 0.5));
+        .info-text {
+            font-size: 16px;
+            color: #b0b0b0;
+            margin-top: 20px;
+            line-height: 1.5;
         }
-        @keyframes neonPulse {
-            from { text-shadow: 0 0 10px rgba(255, 107, 214, 0.5), 0 0 20px rgba(164, 123, 255, 0.3); }
-            to { text-shadow: 0 0 15px rgba(255, 107, 214, 0.8), 0 0 30px rgba(164, 123, 255, 0.6); }
+        .diamond-promo {
+            font-size: 16px;
+            color: #ff3b94;
+            font-weight: 600;
+            margin-top: 10px;
+            text-shadow: 0 0 5px rgba(255, 59, 148, 0.3);
         }
     </style>
 </head>
 <body>
-    <h1>Хентай для сенпая! 😽</h1>
+    <h1>Хентай-плеер для сенпая</h1>
     <video id="player" controls autoplay>
         <source src="https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4" type="video/mp4">
-        Твой Telegram не поддерживает видео, сенпай!
+        Твой Telegram не поддерживает видео!
     </video>
+    <div class="info-text">Контент пополняется каждый день, жди новые видео!</div>
+    <div class="diamond-promo">Хочешь больше видео? Купи алмазы в боте!</div>
 
     <script>
         const tg = window.Telegram.WebApp;
@@ -65,8 +73,6 @@
         tg.expand();
 
         const player = document.getElementById('player');
-
-        // Получаем начальный URL видео из параметров
         const urlParams = new URLSearchParams(window.location.search);
         let videoUrl = urlParams.get('video') || 'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4';
         player.src = videoUrl;
