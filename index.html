@@ -3,137 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Рандомный хентай, сенпай!</title>
+    <title>Хентай-плеер для сенпая</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         body {
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #1a0033 0%, #330066 100%);
-            color: #fff;
-            font-family: 'Poppins', sans-serif;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .container {
+            background: #2c1b47; /* Мягкий темно-фиолетовый фон */
+            color: #e0d0ff; /* Светлый сиреневый текст */
+            font-family: 'Segoe UI', Arial, sans-serif;
             text-align: center;
+            margin: 0;
             padding: 20px;
-            z-index: 1;
         }
         h1 {
-            font-size: 28px;
-            margin: 0 0 20px;
-            text-shadow: 0 0 10px #ff66ff, 0 0 20px #ff99ff;
-            background: -webkit-linear-gradient(#ff66ff, #66ccff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 26px;
+            margin-bottom: 25px;
+            color: #d4aaff; /* Нежный сиреневый заголовок */
+            text-shadow: 0 0 3px rgba(212, 170, 255, 0.5);
         }
         video {
             width: 100%;
             max-width: 640px;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(255, 102, 255, 0.5);
-            background: #000;
+            border: 3px solid #5e4a8c; /* Спокойный фиолетовый бордер */
+            border-radius: 8px;
+            background: #1a1326; /* Темный фон для видео */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         }
         .controls {
             margin-top: 15px;
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            justify-content: center;
         }
         button {
-            background: linear-gradient(45deg, #ff66ff, #66ccff);
+            background: #6b5799; /* Мягкий фиолетовый для кнопок */
             border: none;
             padding: 10px 20px;
             color: #fff;
             font-size: 16px;
-            border-radius: 25px;
+            border-radius: 6px;
             cursor: pointer;
-            box-shadow: 0 0 10px rgba(255, 102, 255, 0.3);
-            transition: transform 0.2s, box-shadow 0.2s;
+            margin: 5px;
+            transition: background 0.3s;
         }
         button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(255, 102, 255, 0.7);
-        }
-        .anime-girl {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('https://i.imgur.com/abc123.jpg') no-repeat center/cover;
-            opacity: 0.2;
-            z-index: 0;
-            filter: blur(5px);
+            background: #8973c2; /* Светлее при наведении */
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="anime-girl"></div>
-    <div class="container">
-        <h1>Рандомный хентай, сенпай! 😽</h1>
-        <video id="player" controls>
-            <source src="" type="video/mp4">
-            Твой Telegram не поддерживает видео, сенпай!
-        </video>
-        <div class="controls">
-            <button onclick="playPause()">Плей/Пауза</button>
-            <button onclick="rewind()">Назад (-10с)</button>
-            <button onclick="forward()">Вперёд (+10с)</button>
-            <button onclick="randomVideo()">Другой хентай</button>
-        </div>
+    <h1>Хентай-плеер для сенпая! 😽</h1>
+    <video id="player" controls>
+        <source src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4" type="video/mp4">
+        Твой Telegram не поддерживает видео, сенпай!
+    </video>
+    <div class="controls">
+        <button onclick="playPause()">Плей/Пауза</button>
+        <button onclick="rewind()">Назад (-10с)</button>
+        <button onclick="forward()">Вперед (+10с)</button>
     </div>
 
     <script>
         const tg = window.Telegram.WebApp;
         tg.ready();
-        tg.expand();
+        tg.expand(); // Разворачиваем на весь экран
 
         const player = document.getElementById('player');
 
-        // Список из 10 MP4-ссылок с Mp4Hentai.com (условные, проверь и замени)
-        const hentaiVideos = [
-            "https://mp4hentai.com/downloads/ova-ikuiku-succubus-ep1.mp4",
-            "https://mp4hentai.com/downloads/mama-katsu-ep1.mp4",
-            "https://mp4hentai.com/downloads/mahou-touki-lilustear-ep1.mp4",
-            "https://mp4hentai.com/downloads/ ane-imo-ep1.mp4",
-            "https://mp4hentai.com/downloads/kanojo-face-ep1.mp4",
-            "https://mp4hentai.com/downloads/ova-imaria-ep1.mp4",
-            "https://mp4hentai.com/downloads/shoujo-ramune-ep2.mp4",
-            "https://mp4hentai.com/downloads/oni-chichi-reborn-ep1.mp4",
-            "https://mp4hentai.com/downloads/discipline-zero-ep1.mp4",
-            "https://mp4hentai.com/downloads/resort-boin-ep2.mp4"
-        ];
+        // Получаем URL видео из параметров (если передан), иначе используем встроенное
+        const urlParams = new URLSearchParams(window.location.search);
+        const videoUrl = urlParams.get('video') || 'http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4';
+        player.src = videoUrl;
 
-        function getRandomVideo() {
-            const randomIndex = Math.floor(Math.random() * hentaiVideos.length);
-            return hentaiVideos[randomIndex];
-        }
-
-        player.src = getRandomVideo();
-
+        // Управление плеером
         function playPause() {
-            if (player.paused) player.play();
-            else player.pause();
+            if (player.paused) {
+                player.play();
+            } else {
+                player.pause();
+            }
         }
 
         function rewind() {
-            player.currentTime -= 10;
+            player.currentTime -= 10; // На 10 секунд назад
         }
 
         function forward() {
-            player.currentTime += 10;
-        }
-
-        function randomVideo() {
-            player.src = getRandomVideo();
-            player.play();
+            player.currentTime += 10; // На 10 секунд вперёд
         }
     </script>
 </body>
